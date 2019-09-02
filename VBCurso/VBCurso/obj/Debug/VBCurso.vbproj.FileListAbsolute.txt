@@ -1,0 +1,14 @@
+C:\Users\Maria Camila Camacho\source\repos\VBCurso\VBCurso\obj\Debug\VBCurso.Form1.resources
+C:\Users\Maria Camila Camacho\source\repos\VBCurso\VBCurso\obj\Debug\VBCurso.Resources.resources
+C:\Users\Maria Camila Camacho\source\repos\VBCurso\VBCurso\obj\Debug\VBCurso.vbproj.GenerateResource.cache
+C:\Users\Maria Camila Camacho\source\repos\VBCurso\VBCurso\obj\Debug\VBCurso.vbproj.CoreCompileInputs.cache
+C:\Users\Maria Camila Camacho\source\repos\VBCurso\VBCurso\bin\Debug\VBCurso.exe.config
+C:\Users\Maria Camila Camacho\source\repos\VBCurso\VBCurso\bin\Debug\VBCurso.exe
+C:\Users\Maria Camila Camacho\source\repos\VBCurso\VBCurso\bin\Debug\VBCurso.pdb
+C:\Users\Maria Camila Camacho\source\repos\VBCurso\VBCurso\bin\Debug\VBCurso.xml
+C:\Users\Maria Camila Camacho\source\repos\VBCurso\VBCurso\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Maria Camila Camacho\source\repos\VBCurso\VBCurso\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Maria Camila Camacho\source\repos\VBCurso\VBCurso\obj\Debug\VBCurso.vbproj.CopyComplete
+C:\Users\Maria Camila Camacho\source\repos\VBCurso\VBCurso\obj\Debug\VBCurso.exe
+C:\Users\Maria Camila Camacho\source\repos\VBCurso\VBCurso\obj\Debug\VBCurso.xml
+C:\Users\Maria Camila Camacho\source\repos\VBCurso\VBCurso\obj\Debug\VBCurso.pdb
