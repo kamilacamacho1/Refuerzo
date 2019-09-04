@@ -4,6 +4,11 @@ Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
 Public Class Form1
+    ':::Ruta donde crearemos nuestro archivo txt
+    Dim ruta As String = "C:\Tutoriales\"
+    ':::Nombre del archivo
+    Dim archivo As String = "Prueba.txt"
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         'Antes de ingresar al formulario se ingresa el nombre 
@@ -64,29 +69,10 @@ Public Class Form1
 
 
 
+
+
     End Sub
 
-    'Private Sub GenerarArchivo(jResults As JObject)
-
-    '    Dim strStreamW As Stream
-    '    Dim strStreamWriter As StreamWriter
-
-    '    Try
-    '        Dim ds As DataSet
-    '        'Ruta de el archivo para agregar
-    '        Dim fileP As String = "C:\nombreArchivo.txt"
-
-    '        strStreamW = File.OpenWrite(fileP)
-
-    '        strStreamWriter = New StreamWriter(strStreamW, System.Text.Encoding.UTF8)
-
-    '        'ds = jResults
-
-    '    Catch ex As Exception
-
-    '    End Try
-
-    'End Sub
 
     Public Function ObtenerDatosDeJson(json As JObject) As DataTable
 
@@ -106,5 +92,131 @@ Public Class Form1
         Return JsonConvert.DeserializeObject(Of DataTable)(trgArray.ToString())
 
     End Function
+
+    Private Sub BtnCrearTxt_Click(sender As Object, e As EventArgs) Handles BtnCrearTxt.Click
+
+        Dim fs As FileStream
+
+        Try
+            If File.Exists(ruta) Then
+
+                ':::Si la carpeta existe creamos o sobreescribios el archivo txt
+                fs = File.Create(ruta & archivo)
+                fs.Close()
+                MsgBox("Archivo creado Correctamente", MsgBoxStyle.Information, "Manejo de Archivos")
+
+            Else
+                ':::Si la carpeta no existe la creamos
+                Directory.CreateDirectory(ruta)
+                ':::Una vez creada la carpeta creamos o sobreescribios el archivo txt
+                fs = File.Create(ruta & archivo)
+                fs.Close()
+                MsgBox("Archivo Creado Correctamente", MsgBoxStyle.Information, "Manejo de Archivos")
+            End If
+
+        Catch ex As Exception
+
+            MsgBox("Se genero un error", MsgBoxStyle.Critical, "Manejo de Archivos")
+
+        End Try
+
+    End Sub
+
+    Private Sub BtnSobreescribir_Click(sender As Object, e As EventArgs) Handles BtnSobreescribir.Click
+        ':::Creamos un objeto de tipo StreamWriter que nos permite escribir en ficheros TXT
+        Dim escribir As New StreamWriter(ruta & archivo)
+        Try
+            ':::Escribimos una linea en nuestro archivo TXT con el formato que este separado por coma (,)
+            escribir.WriteLine(TxtNombres.Text + "," + TxtApellidos.Text)
+            escribir.Close()
+            MsgBox("registro Guardado Correctamente", MsgBoxStyle.Information, "Manejo de Archivos")
+            '::: TextBox Vacíos
+            TxtNombres.Clear()
+            TxtApellidos.Clear()
+            '::: procedimiento para leer el archivo TXT
+            LeerArchivo()
+
+        Catch ex As Exception
+
+            MsgBox("Se genero un problema")
+
+        End Try
+
+    End Sub
+
+    Sub LeerArchivo()
+        ':::Creamos nuestro objeto de tipo StreamReader que nos permite leer archivos
+        Dim leer As New StreamReader(ruta & archivo)
+
+        ':::Limpiamos nuestro ListBox
+        ListBoxClientes.Items.Clear()
+
+        Try
+            ':::Indicamos mediante un While que mientras no sea el ultimo caracter repita el proceso
+            While leer.Peek <> -1
+                ':::Lee cada linea del archivo TXT
+                Dim linea As String = leer.ReadLine()
+                ':::Valida que la linea no este vacia
+                If String.IsNullOrEmpty(linea) Then
+                    Continue While
+                End If
+                ':::Se Agrega los registros encontrados
+                ListBoxClientes.Items.Add(linea)
+            End While
+
+            leer.Close()
+            ':::Total de registros cargados al ListBox
+            LblTotal.Text = ListBoxClientes.Items.Count
+
+        Catch ex As Exception
+            MsgBox("Se genero un problema para leer el archivo", MsgBoxStyle.Critical, "Manejo de Archivos")
+        End Try
+
+
+    End Sub
+
+    Private Sub BtnGuardartodo_Click(sender As Object, e As EventArgs) Handles BtnGuardartodo.Click
+        ':::Creamos un objeto de tipo StreamWriter que nos permite escribir en ficheros TXT
+        ':::El unico cambio es que agregamos el valor TRUE con el fin de indicar que queremos
+        ':::Seguir agregando los registros y no sobreescribirlos
+        Dim escribir As New StreamWriter(ruta & archivo, True)
+
+        Try
+            ':::Escribimos una linea en nuestro archivo TXT con el formato que este separado por coma (,)
+            escribir.WriteLine(TxtNombres.Text + "," + TxtApellidos.Text)
+            escribir.Close()
+            MsgBox("Registro guardado correctamente", MsgBoxStyle.Information, "Manejo de archivos")
+            TxtNombres.Clear()
+            TxtApellidos.Clear()
+            LeerArchivo()
+        Catch ex As Exception
+
+            MsgBox("Se presento un problema al momento de escribir", MsgBoxStyle.Critical, "Manejo de Archivos")
+
+        End Try
+
+    End Sub
+
+    Private Sub BtnEliminar_Click(sender As Object, e As EventArgs) Handles BtnEliminar.Click
+        Try
+            If File.Exists(ruta & archivo) Then
+                ':::Eliminamos el archivo TXT
+                File.Delete(ruta & archivo)
+                MsgBox("Archivo eliminado Correctamente")
+                TxtNombres.Clear()
+                TxtApellidos.Clear()
+                ListBoxClientes.ClearSelected()
+                LblTotal.Text = "0"
+
+
+            Else
+                MsgBox("No se encuentra el archivo")
+
+            End If
+
+        Catch ex As Exception
+            MsgBox("Se presento un problema al eliminar el archivo", MsgBoxStyle.Critical, "Manejo de archivos")
+        End Try
+    End Sub
 
 End Class
